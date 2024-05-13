@@ -1,0 +1,5 @@
+[23-May-2021 22:33:00 Asia/Jakarta] PHP Deprecated:  The each() function is deprecated. This message will be suppressed on further calls in /home/arss3997/public_html/pelayanandesagari/fpdf/fpdf.php on line 1565
+[23-May-2021 22:37:13 Asia/Jakarta] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/arss3997/public_html/pelayanandesagari/fpdf/fpdf.php on line 12
+[23-May-2021 22:37:13 Asia/Jakarta] PHP Deprecated:  The each() function is deprecated. This message will be suppressed on further calls in /home/arss3997/public_html/pelayanandesagari/fpdf/fpdf.php on line 1565
+[23-May-2021 22:41:12 Asia/Jakarta] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor in /home/arss3997/public_html/pelayanandesagari/fpdf/fpdf.php on line 12
+[23-May-2021 22:41:13 Asia/Jakarta] PHP Deprecated:  The each() function is deprecated. This message will be suppressed on further calls in /home/arss3997/public_html/pelayanandesagari/fpdf/fpdf.php on line 1565
