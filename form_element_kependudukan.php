@@ -1,7 +1,6 @@
 <?php 
 include "connect.php";
 include "assets/fromawi.php";
-
 ?>
 <?php
 session_start();
@@ -486,13 +485,10 @@ session_start();
 
 														</table>	
 														
-														<h4 class="panel-title">D. NIK & Nama & Jenis Kelamin</h4><hr>
+														<h4 class="panel-title">D. Nama & Jenis Kelamin</h4><hr>
 														<table id="tb_anggota" class="table">
 															<thead>
 																<tr>
-																	<th>NIK (Semula)</th>
-																	<th>NIK (Menjadi)</th>
-																	<th>Dasar Perubahan</th>
 																	<th>Nama (Semula)</th>
 																	<th>Nama (Menjadi)</th>
 																	<th>Dasar Perubahan</th>
@@ -512,18 +508,6 @@ session_start();
 						while($cw=mysqli_fetch_array($qw)){
 						?>
 						<tr>
-						<td><center><?php echo $cw['NIK'];?></center></td>
-						<td><center><input type="text" placeholder="NIK" class="form-control" name="nik" id="nik" value=""></center></td>
-						<td><center><select name="dasar6" id="" class="form-control">
-																<option value="">Pilih</option>
-																<option value="Surat Keterangan">Surat Keterangan</option>
-																<option value="Akta Kelahiran">Akta Kelahiran</option>
-																<option value="Akta Perkawinan">Akta Perkawinan</option>
-																<option value="Akta Perceraian">Akta Perceraian</option>
-																<option value="Akta Kematian">Akta Kematian</option>
-																<option value="Ijazah">Ijazah</option>
-																
-															</select></center></td>
 						<td><center><?php echo $cw['NAMA_LGKP'];?></center></td>
 						<td><center><input type="text" placeholder="Nama" class="form-control" name="nama" id="nama" value=""></center></td>
 						<td><center><select name="dasar7" id="" class="form-control">
