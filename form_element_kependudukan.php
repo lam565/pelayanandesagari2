@@ -290,22 +290,28 @@ session_start();
 						and data_keluarga.NO_KK='$_GET[no_kk]' ORDER BY biodata_wni.STAT_HBKEL ASC");
 					
 						while($cw=mysqli_fetch_array($qw)){
+							$nik=$cw['NIK'];
 						?>
 						<tr>
 						<td><center><?php echo $cw['NIK'];?></center></td>
-						<input type="hidden" name="nik"  value="<?php echo $cw['NIK'];?>">
+						<!-- <input type="hidden" name="nik"  value="<?php echo $cw['NIK'];?>"> -->
 						<td><center><?php echo $cw['NAMA_LGKP'];?></center></td>
 						<td><center><?php echo $cw['pendidikan'];?></center></td>
-						<td><center><select name="pendidikan" class="form-control">
+						<input type="hidden" name="pdd_akh[awal][]"  value="<?php echo $cw['PDDK_AKH'];?>">
+						<td><center><select name="pdd_akh[ahir][]" class="form-control">
 																<option value="">Pilih</option>
 																<?php
 																$pdd=mysqli_query($connect,"SELECT * FROM pendidikan_terakhir ORDER BY pendidikan");
 																while ($pddk=mysqli_fetch_array($pdd)){
-																	echo "<option value=\"$pddk[PDDK_AKH]\">$pddk[pendidikan]</option>";
+																	if ($cw['PDDK_AKH']==$pddk['PDDK_AKH']){
+																		echo "<option value=\"$pddk[PDDK_AKH]\" selected>$pddk[pendidikan]</option>";
+																	} else {
+																		echo "<option value=\"$pddk[PDDK_AKH]\">$pddk[pendidikan]</option>";
+																	}
 																}
 																?>
 															</select></center></td>
-						<td><center><select name="dasar" id="" class="form-control">
+						<td><center><select name="pdd_akh[dasar][]" id="" class="form-control">
 																<option value="">Pilih</option>
 																<option value="Surat Keterangan">Surat Keterangan</option>
 																<option value="Akta Kelahiran">Akta Kelahiran</option>
@@ -316,7 +322,8 @@ session_start();
 																
 															</select></center></td>
 						<td><center><?php echo $cw['pekerjaan'];?></center></td>
-						<td><center><select name="pekerjaan" id="" class="form-control">
+						<input type="hidden" name="jenis_pkrjn0[]"  value="<?php echo $cw['NIK'];?>">
+						<td><center><select name="jenis_pkrjn1[]" id="" class="form-control">
 																<option value="">Pilih</option>
 																<?php
 																$pk=mysqli_query($connect,"SELECT * FROM pekerjaan ORDER BY pekerjaan");
