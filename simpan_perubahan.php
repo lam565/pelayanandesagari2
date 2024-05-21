@@ -23,6 +23,7 @@ function cekBeda($awal, $ahir)
 $squery = "";
 
 for ($i = 0; $i < $jkel; $i++) {
+    echo "NIK : " . $orang['data']['nik'][$i];
     foreach ($elemen as $val) {
         echo $val . " adalah : ";
         $awal = $orang['data'][$val]['awal'][$i];
