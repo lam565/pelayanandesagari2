@@ -326,7 +326,7 @@ session_start();
 																		<input type="hidden" name="orang[data][pdd_akh][awal][]" value="<?php echo $cw['PDDK_AKH']; ?>">
 																		<td>
 																			<center><select name="orang[data][pdd_akh][ahir][]" class="form-control">
-																					<option value="">Pilih</option>
+																					<option value="-">Pilih</option>
 																					<?php
 																					$pdd = mysqli_query($connect, "SELECT * FROM pendidikan_terakhir ORDER BY pendidikan");
 																					while ($pddk = mysqli_fetch_array($pdd)) {
@@ -354,7 +354,7 @@ session_start();
 																		<td>
 																			<center><?php echo $cw['pekerjaan']; ?></center>
 																		</td>
-																		<input type="hidden" name="orang[data][jns_pkrjn][awal][]" value="<?php echo $cw['NIK']; ?>">
+																		<input type="hidden" name="orang[data][jns_pkrjn][awal][]" value="<?php echo $cw['JENIS_PKRJN']; ?>">
 																		<td>
 																			<center><select name="orang[data][jns_pkrjn][ahir][]" id="" class="form-control">
 																					<option value="-">Pilih</option>
@@ -421,7 +421,7 @@ session_start();
 																		</td>
 																		<td>
 																			<center><?php echo $cw['nama_agama']; ?></center>
-																			<input type="hidden" name="orang[data][agama][awal][]">
+																			<input type="hidden" name="orang[data][agama][awal][]" value="<?php echo $cw['AGAMA']; ?>">
 																		</td>
 																		<td>
 																			<center><select name="orang[data][agama][ahir][]" id="" class="form-control">
@@ -452,21 +452,26 @@ session_start();
 																		</td>
 																		<td>
 																			<center><?php echo $cw['nama_golongan']; ?></center>
+																			<input type="hiden" name="orang[data][goldar][awal][]" value="<?php echo $cw['GOL_DRH']; ?>">
 																		</td>
 																		<td>
-																			<center><select name="golongan_darah" id="" class="form-control">
+																			<center><select name="orang[data][goldar][ahir][]" id="" class="form-control">
 																					<option value="">Pilih</option>
 																					<?php
 																					$gl = mysqli_query($connect, "SELECT * FROM golongan_darah ORDER BY nama_golongan");
 																					while ($drh = mysqli_fetch_array($gl)) {
-																						echo "<option value=\"$drh[GOL_DRH]\">$drh[nama_golongan]</option>";
+																						if ($cw['GOL_DRH'] == $drh['GOL_DRH']) {
+																							echo "<option value=\"$drh[GOL_DRH]\" selected>$drh[nama_golongan]</option>";
+																						} else {
+																							echo "<option value=\"$drh[GOL_DRH]\">$drh[nama_golongan]</option>";
+																						}
 																					}
 																					?>
 																				</select></center>
 																		</td>
 																		<td>
-																			<center><select name="dasar3" id="" class="form-control">
-																					<option value="">Pilih</option>
+																			<center><select name="orang[data][goldar][dasar][]" id="" class="form-control">
+																					<option value="-">Pilih</option>
 																					<option value="Surat Keterangan">Surat Keterangan</option>
 																					<option value="Akta Kelahiran">Akta Kelahiran</option>
 																					<option value="Akta Perkawinan">Akta Perkawinan</option>
@@ -515,21 +520,27 @@ session_start();
 																		</td>
 																		<td>
 																			<center><?php echo $cw['status_perkawinan']; ?></center>
+																			<input type="hidden" name="orang[data][status][awal][]" value="<?php echo $cw['STAT_KWN']; ?>">
 																		</td>
 																		<td>
-																			<center><select name="status_perkawinan" id="" class="form-control">
+
+																			<center><select name="orang[data][status][ahir][]" id="" class="form-control">
 																					<option value="">Pilih</option>
 																					<?php
 																					$kwn = mysqli_query($connect, "SELECT * FROM status_perkawinan ORDER BY status_perkawinan");
 																					while ($skwn = mysqli_fetch_array($kwn)) {
-																						echo "<option value=\"$skwn[STAT_KWN]\">$skwn[status_perkawinan]</option>";
+																						if ($cw['STAT_KWN'] == $skwn['STAT_KWN']) {
+																							echo "<option value=\"$skwn[STAT_KWN]\" selected>$skwn[status_perkawinan]</option>";
+																						} else {
+																							echo "<option value=\"$skwn[STAT_KWN]\">$skwn[status_perkawinan]</option>";
+																						}
 																					}
 																					?>
 																				</select></center>
 																		</td>
 																		<td>
-																			<center><select name="dasar4" id="" class="form-control">
-																					<option value="">Pilih</option>
+																			<center><select name="orang[data][status][dasar][]" id="" class="form-control">
+																					<option value="-">Pilih</option>
 																					<option value="Surat Keterangan">Surat Keterangan</option>
 																					<option value="Akta Kelahiran">Akta Kelahiran</option>
 																					<option value="Akta Perkawinan">Akta Perkawinan</option>
@@ -541,21 +552,26 @@ session_start();
 																		</td>
 																		<td>
 																			<center><?php echo $cw['status_hubungan']; ?></center>
+																			<input type="hidden" name="orang[data][shbk][awal][]" value="<?php echo $cw['STAT_HBKEL']; ?>">
 																		</td>
 																		<td>
-																			<center><select name="status_hubungan" id="" class="form-control">
+																			<center><select name="orang[data][shbk][ahir][]" id="" class="form-control">
 																					<option value="">Pilih</option>
 																					<?php
 																					$hb = mysqli_query($connect, "SELECT * FROM status_hubungan ORDER BY status_hubungan");
 																					while ($hbn = mysqli_fetch_array($hb)) {
-																						echo "<option value=\"$hbn[STAT_HBKEL]\">$hbn[status_hubungan]</option>";
+																						if ($cw['STAT_HBKEL'] == $hbn['STAT_HBKEL']) {
+																							echo "<option value=\"$hbn[STAT_HBKEL]\" selected>$hbn[status_hubungan]</option>";
+																						} else {
+																							echo "<option value=\"$hbn[STAT_HBKEL]\">$hbn[status_hubungan]</option>";
+																						}
 																					}
 																					?>
 																				</select></center>
 																		</td>
 																		<td>
-																			<center><select name="dasar5" id="" class="form-control">
-																					<option value="">Pilih</option>
+																			<center><select name="orang[data][shbk][dasar][]" id="" class="form-control">
+																					<option value="-">Pilih</option>
 																					<option value="Surat Keterangan">Surat Keterangan</option>
 																					<option value="Akta Kelahiran">Akta Kelahiran</option>
 																					<option value="Akta Perkawinan">Akta Perkawinan</option>
@@ -597,13 +613,14 @@ session_start();
 																	<tr>
 																		<td>
 																			<center><?php echo $cw['NAMA_LGKP']; ?></center>
+																			<input type="hidden" name="orang[data][nama_lgkp][awal][]" value="<?php echo $cw['NAMA_LGKP']; ?>">
 																		</td>
 																		<td>
-																			<center><input type="text" placeholder="Nama" class="form-control" name="nama" id="nama" value=""></center>
+																			<center><input type="text" placeholder="Nama Baru" class="form-control" name="orang[data][nama_lgkp][ahir][]" id="nama" value=""></center>
 																		</td>
 																		<td>
-																			<center><select name="dasar7" id="" class="form-control">
-																					<option value="">Pilih</option>
+																			<center><select name="orang[data][nama_lgkp][dasar][]" id="" class="form-control">
+																					<option value="-">Pilih</option>
 																					<option value="Surat Keterangan">Surat Keterangan</option>
 																					<option value="Akta Kelahiran">Akta Kelahiran</option>
 																					<option value="Akta Perkawinan">Akta Perkawinan</option>
@@ -615,20 +632,25 @@ session_start();
 																		</td>
 																		<td>
 																			<center><?php echo $cw['jenis_kelamin']; ?></center>
+																			<input type="hidden" name="orang[data][jklmin][awal][]" value="<?php echo $cw['JENIS_KLMIN']; ?>">
 																		</td>
 																		<td>
-																			<center><select name="jenis_kelamin" id="" class="form-control">
-																					<option value="">Pilih</option>
+																			<center><select name="orang[data][jklmin][ahir][]" id="" class="form-control">
+																					<option value="-">Pilih</option>
 																					<?php
 																					$kl = mysqli_query($connect, "SELECT * FROM jenis_kelamin ORDER BY jenis_kelamin");
 																					while ($klm = mysqli_fetch_array($kl)) {
-																						echo "<option value=\"$klm[JENIS_KLMIN]\">$klm[jenis_kelamin]</option>";
+																						if ($cw['JENIS_KLMIN'] == $klm['JENIS_KLMIN']) {
+																							echo "<option value=\"$klm[JENIS_KLMIN]\" selected>$klm[jenis_kelamin]</option>";
+																						} else {
+																							echo "<option value=\"$klm[JENIS_KLMIN]\">$klm[jenis_kelamin]</option>";
+																						}
 																					}
 																					?>
 																				</select></center>
 																		</td>
 																		<td>
-																			<center><select name="dasar8" id="" class="form-control">
+																			<center><select name="orang[data][jklmin][dasar][]" id="" class="form-control">
 																					<option value="">Pilih</option>
 																					<option value="Surat Keterangan">Surat Keterangan</option>
 																					<option value="Akta Kelahiran">Akta Kelahiran</option>
@@ -677,13 +699,14 @@ session_start();
 																		</td>
 																		<td>
 																			<center><?php echo $cw['TMPT_LHR']; ?></center>
+																			<input type="hidden" name="orang[data][tmptlhr][awal][]" value="<?php echo $cw['TMPT_LHR']; ?>">
 																		</td>
 																		<td>
-																			<center><input type="text" placeholder="Tempat Lahir" class="form-control" name="tempat_lhr" id="tempat_lhr" value=""></center>
+																			<center><input type="text" placeholder="Tempat Lahir Baru" class="form-control" name="orang[data][tmptlhr][ahir][]" id="tempat_lhr" value=""></center>
 																		</td>
 																		<td>
-																			<center><select name="dasar9" id="" class="form-control">
-																					<option value="">Pilih</option>
+																			<center><select name="orang[data][tmptlhr][dasar][]" id="" class="form-control">
+																					<option value="-">Pilih</option>
 																					<option value="Surat Keterangan">Surat Keterangan</option>
 																					<option value="Akta Kelahiran">Akta Kelahiran</option>
 																					<option value="Akta Perkawinan">Akta Perkawinan</option>
@@ -694,14 +717,15 @@ session_start();
 																				</select></center>
 																		</td>
 																		<td>
-																			<center><?php echo $cw['TGL_LHR']; ?></center>
+																			<center><?php echo substr($cw['TGL_LHR'], 0, 10); ?></center>
+																			<input type="hidden" name="orang[data][tgl_lhr][awal][]" value="<?php echo substr($cw['TGL_LHR'], 0, 10); ?>">
 																		</td>
 																		<td>
-																			<center><input type="text" placeholder="Tanggal lahir" class="form-control" name="tgl_lhr" id="tgl_lhr" value=""></center>
+																			<center><input type="date" class="form-control" name="orang[data][tgl_lhr][ahir][]" value="<?php echo substr($cw['TGL_LHR'], 0, 10); ?>"></center>
 																		</td>
 																		<td>
-																			<center><select name="dasar10" id="" class="form-control">
-																					<option value="">Pilih</option>
+																			<center><select name="orang[data][tgl_lhr][dasar][]" id="" class="form-control">
+																					<option value="-">Pilih</option>
 																					<option value="Surat Keterangan">Surat Keterangan</option>
 																					<option value="Akta Kelahiran">Akta Kelahiran</option>
 																					<option value="Akta Perkawinan">Akta Perkawinan</option>

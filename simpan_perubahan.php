@@ -8,15 +8,30 @@ $nik_pemohon = $_POST['nik_pemohon'];
 $no_kk = $_POST['no_kk'];
 $orang = $_POST['orang'];
 
+$elemen = array("pdd_ahr", "jns_pkrjn", "agama", "goldar", "status", "shbk", "nama_lgkp", "jklmin", "tmptlhr", "tgl_lhr");
 $jkel = count($orang['data']['nik']);
+
+function cekBeda($awal, $ahir)
+{
+    if ($awal == $ahir || $ahir == "") {
+        return "sama";
+    } else {
+        return "beda";
+    }
+}
 
 $squery = "";
 
 for ($i = 0; $i < $jkel; $i++) {
-    echo $orang['data']['nik'][$i] . "<br>";
-    echo $orang['data']['pdd_akh']['awal'][$i] . "<br>";
-    echo $orang['data']['pdd_akh']['ahir'][$i] . "<br>";
-    echo $orang['data']['pdd_akh']['dasar'][$i] . "<br>";
+    foreach ($elemen as $val) {
+        echo $val . " adalah : ";
+        $awal = $orang['data'][$val]['awal'][$i];
+        $ahir = $orang['data'][$val]['ahir'][$i];
+        echo cekBeda($awal, $ahir) . "<br>";
+        echo $val . " dasar : " . $orang['data'][$val]['dasar'][$i] . "<br><br>";
+    }
+    echo $orang['data']['tgl_lhr']['awal'][$i] . "<br>";
+    echo $orang['data']['tgl_lhr']['ahir'][$i] . "<br><br>";
 }
 
 // echo $jkel;
