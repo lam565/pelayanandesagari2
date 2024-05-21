@@ -6,13 +6,27 @@ session_start();
 //key
 $nik_pemohon = $_POST['nik_pemohon'];
 $no_kk = $_POST['no_kk'];
-$pddk_akh = $_POST['pdd_akh'];
+$orang = $_POST['orang'];
 
-var_dump($pddk_akh);
+$jkel = count($orang['data']['nik']);
 
+$squery = "";
 
-foreach ($pddk_akh as $key => $pddk) {
+for ($i = 0; $i < $jkel; $i++) {
+    echo $orang['data']['nik'][$i] . "<br>";
+    echo $orang['data']['pdd_akh']['awal'][$i] . "<br>";
+    echo $orang['data']['pdd_akh']['ahir'][$i] . "<br>";
+    echo $orang['data']['pdd_akh']['dasar'][$i] . "<br>";
 }
+
+// echo $jkel;
+
+// foreach ($pddk_akh as $state) {
+//     foreach ($state as $key => $value){
+//         echo $key .":". $value . "<br>";
+//     } 
+// }
+
 
 // $nik=$_POST['nik_pemohon'];
 // $no_kk=$_POST['no_kk'];
@@ -25,4 +39,3 @@ foreach ($pddk_akh as $key => $pddk) {
 // $results2=mysqli_query($connect,$sql2)or die("error:".mysqli_error($connect));
 
 //echo "<script>window.location='pdf_perubahan.php?nik=$nik_pemohon&no_kk=$no_kk';</script>";
-?>
