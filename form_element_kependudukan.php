@@ -452,7 +452,7 @@ session_start();
 																		</td>
 																		<td>
 																			<center><?php echo $cw['nama_golongan']; ?></center>
-																			<input type="hiden" name="orang[data][goldar][awal][]" value="<?php echo $cw['GOL_DRH']; ?>">
+																			<input type="hidden" name="orang[data][goldar][awal][]" value="<?php echo $cw['GOL_DRH']; ?>">
 																		</td>
 																		<td>
 																			<center><select name="orang[data][goldar][ahir][]" id="" class="form-control">
