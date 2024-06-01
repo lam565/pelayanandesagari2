@@ -47,7 +47,7 @@ for ($i = 0; $i < $jkel; $i++) {
             $query_upd = $query_upd . " $col = '$ahir',";
         }
     }
-    $query_upd = $query_upd . " WHERE NIK = " . $orang['data']['nik'][$i];
+    $query_upd = substr($query_upd, 0, -1) . " WHERE NIK = " . $orang['data']['nik'][$i];
 
     //jika update berhasil
     if (1) {
@@ -58,10 +58,10 @@ for ($i = 0; $i < $jkel; $i++) {
             $ahir = $orang['data'][$val]['ahir'][$i];
             $dasar = $orang['data'][$val]['dasar'][$i];
 
-            $query_d = $query_d . " " . $col . "_awal," . $col . "_ahir," . $col . "_dasar,";
-            $query_b = $query_b . " '$awal','$ahir',''$dasar";
+            $query_d = $query_d . " " . $col . "_awal, " . $col . "_ahir, " . $col . "_dasar,";
+            $query_b = $query_b . " '$awal', '$ahir', '$dasar',";
         }
-        $query_ins = $query_d . $query_b . ")";
+        $query_ins = substr($query_d, 0, -1) . substr($query_b, 0, -1) . ")";
     }
 
     echo $query_upd . "<br/>";
