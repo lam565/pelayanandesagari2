@@ -32,39 +32,45 @@ function cekBeda($awal, $ahir)
     }
 }
 
-$squery = "";
-
 for ($i = 0; $i < $jkel; $i++) {
 
-    $query_upd = "UPDATE biodata_wni SET ";
+    $query_upd = "";
     $query_ins = "";
+    $msg = "";
 
     foreach ($elemen as $col => $val) {
         $awal = $orang['data'][$val]['awal'][$i];
-        $ahir = $orang['data'][$val]['ahir'][$i];
+        $ahir = strip_tags(htmlspecialchars(trim($orang['data'][$val]['ahir'][$i])));
         $dasar = $orang['data'][$val]['dasar'][$i];
         if (cekBeda($awal, $ahir)) {
             $query_upd = $query_upd . " $col = '$ahir',";
+            $msg = $msg . " $col,";
         }
     }
-    $query_upd = substr($query_upd, 0, -1) . " WHERE NIK = " . $orang['data']['nik'][$i];
+    if ($query_upd != "") {
+        $query_upd = "UPDATE biodata_wni SET " . substr($query_upd, 0, -1) . " WHERE NIK = " . $orang['data']['nik'][$i];
+        $msg = "Berhasil mengubah data" . substr($msg, 0, -1);
 
-    //jika update berhasil
-    if (1) {
-        $query_d = "INSERT INTO riwayat_perubahan ( ";
-        $query_b = ") VALUES (";
-        foreach ($elemen as $col => $val) {
-            $awal = $orang['data'][$val]['awal'][$i];
-            $ahir = $orang['data'][$val]['ahir'][$i];
-            $dasar = $orang['data'][$val]['dasar'][$i];
+        //jika update berhasil
+        if (1) {
+            $query_d = "INSERT INTO riwayat_perubahan ( ";
+            $query_b = ") VALUES (";
+            foreach ($elemen as $col => $val) {
+                $awal = $orang['data'][$val]['awal'][$i];
+                $ahir = $orang['data'][$val]['ahir'][$i];
+                $dasar = $orang['data'][$val]['dasar'][$i];
 
-            $query_d = $query_d . " " . $col . "_awal, " . $col . "_ahir, " . $col . "_dasar,";
-            $query_b = $query_b . " '$awal', '$ahir', '$dasar',";
+                $query_d = $query_d . " " . $col . "_awal, " . $col . "_ahir, " . $col . "_dasar,";
+                $query_b = $query_b . " '$awal', '$ahir', '$dasar',";
+            }
+            $query_ins = substr($query_d, 0, -1) . substr($query_b, 0, -1) . ")";
         }
-        $query_ins = substr($query_d, 0, -1) . substr($query_b, 0, -1) . ")";
-    }
+    } else {
+        $msg = "Tidak ada perubahan";
+    }  
 
     echo $query_upd . "<br/>";
+    echo $msg . "<br/>";
     echo $query_ins  . "<br/><br/>";
 }
 
