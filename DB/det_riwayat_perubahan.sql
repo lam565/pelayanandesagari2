@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jun 2024 pada 11.02
+-- Waktu pembuatan: 02 Jun 2024 pada 13.30
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.0.30
 
@@ -30,18 +30,19 @@ SET time_zone = "+00:00";
 CREATE TABLE `det_riwayat_perubahan` (
   `ID_DET_RIWAYAT` int(11) NOT NULL,
   `ID_RIWAYAT` varchar(11) NOT NULL,
+  `NIK` varchar(100) NOT NULL,
   `PDDK_AKH_awal` int(11) NOT NULL,
   `PDDK_AKH_ahir` int(11) NOT NULL,
-  `PDDK_AKH_dasar` int(11) NOT NULL,
+  `PDDK_AKH_dasar` varchar(100) NOT NULL,
   `JENIS_PKRJN_awal` int(11) NOT NULL,
   `JENIS_PKRJN_ahir` int(11) NOT NULL,
-  `JENIS_PKRJN_dasar` int(11) NOT NULL,
+  `JENIS_PKRJN_dasar` varchar(100) NOT NULL,
   `AGAMA_awal` int(11) NOT NULL,
   `AGAMA_ahir` int(11) NOT NULL,
-  `AGAMA_dasar` int(11) NOT NULL,
+  `AGAMA_dasar` varchar(100) NOT NULL,
   `GOL_DRH_awal` int(11) NOT NULL,
   `GOL_DRH_ahir` int(11) NOT NULL,
-  `GOL_DRH_dasar` int(11) NOT NULL,
+  `GOL_DRH_dasar` varchar(100) NOT NULL,
   `STAT_KWN_awal` varchar(11) NOT NULL,
   `STAT_KWN_ahir` varchar(11) NOT NULL,
   `STAT_KWN_dasar` varchar(11) NOT NULL,
@@ -53,13 +54,13 @@ CREATE TABLE `det_riwayat_perubahan` (
   `NAMA_LGKP_dasar` varchar(255) NOT NULL,
   `JENIS_KLMIN_awal` varchar(11) NOT NULL,
   `JENIS_KLMIN_ahir` varchar(11) NOT NULL,
-  `JENIS_KLMIN_dasar` varchar(11) NOT NULL,
+  `JENIS_KLMIN_dasar` varchar(100) NOT NULL,
   `TMPT_LHR_awal` varchar(32) NOT NULL,
   `TMPT_LHR_ahir` varchar(32) NOT NULL,
   `TMPT_LHR_dasar` varchar(32) NOT NULL,
   `TGL_LHR_awal` datetime NOT NULL,
   `TGL_LHR_ahir` datetime NOT NULL,
-  `TGL_LHR_dasar` datetime NOT NULL,
+  `TGL_LHR_dasar` varchar(100) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
