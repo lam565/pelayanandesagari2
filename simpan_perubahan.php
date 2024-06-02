@@ -8,6 +8,13 @@ $nik_pemohon = $_POST['nik_pemohon'];
 $no_kk = $_POST['no_kk'];
 $orang = $_POST['orang'];
 
+$q = mysqli_query($connect, "SELECT max(ID_RIWAYAT) as maxid FROM riwayat_perubahan");
+$data = mysqli_fetch_array($q);
+$idr = $data['maxid'];
+$urt = (int) substr($idr, 3, 3);
+$urt++;
+$idr = "RWY" . sprintf("%04s", $urt);
+
 $elemen = array(
     "PDDK_AKH" => "pdd_akh",
     "JENIS_PKRJN" => "jns_pkrjn",
@@ -32,8 +39,10 @@ function cekBeda($awal, $ahir)
     }
 }
 
-for ($i = 0; $i < $jkel; $i++) {
 
+$ada = 0;
+for ($i = 0; $i < $jkel; $i++) {
+    $nik = $orang['data']['nik'][$i];
     $query_upd = "";
     $query_ins = "";
     $msg = "";
@@ -48,13 +57,13 @@ for ($i = 0; $i < $jkel; $i++) {
         }
     }
     if ($query_upd != "") {
-        $query_upd = "UPDATE biodata_wni SET " . substr($query_upd, 0, -1) . " WHERE NIK = " . $orang['data']['nik'][$i];
-        $msg = "Berhasil mengubah data" . substr($msg, 0, -1);
-
+        $query_upd = "UPDATE biodata_wni SET " . substr($query_upd, 0, -1) . " WHERE NIK = '$nik'";
+        $ada++;
         //jika update berhasil
-        if (1) {
-            $query_d = "INSERT INTO riwayat_perubahan ( ";
-            $query_b = ") VALUES (";
+        if (mysqli_query($connect, $query_upd)) {
+            $msg = "Berhasil mengubah data" . substr($msg, 0, -1);
+            $query_d = "INSERT INTO det_riwayat_perubahan ( ID_RIWAYAT, NIK, ";
+            $query_b = ") VALUES ( '$idr', '$nik', ";
             foreach ($elemen as $col => $val) {
                 $awal = $orang['data'][$val]['awal'][$i];
                 $ahir = $orang['data'][$val]['ahir'][$i];
@@ -64,15 +73,21 @@ for ($i = 0; $i < $jkel; $i++) {
                 $query_b = $query_b . " '$awal', '$ahir', '$dasar',";
             }
             $query_ins = substr($query_d, 0, -1) . substr($query_b, 0, -1) . ")";
+            mysqli_query($connect, $query_ins) or die("error:" . mysqli_error($connect));
+        } else {
+            $msg = "0";
         }
     } else {
-        $msg = "Tidak ada perubahan";
-    }  
-
-    echo $query_upd . "<br/>";
-    echo $msg . "<br/>";
-    echo $query_ins  . "<br/><br/>";
+        $msg = "404";
+    }
 }
+
+if ($ada > 0) {
+    echo "$query insert riwayat";
+} else {
+    echo "Tampilkan $msg";
+}
+
 
 // echo $jkel;
 
