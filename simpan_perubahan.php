@@ -11,7 +11,7 @@ $orang = $_POST['orang'];
 $q = mysqli_query($connect, "SELECT max(ID_RIWAYAT) as maxid FROM riwayat_perubahan");
 $data = mysqli_fetch_array($q);
 $idr = $data['maxid'];
-$urt = (int) substr($idr, 3, 3);
+$urt = (int) substr($idr, 3, 4);
 $urt++;
 $idr = "RWY" . sprintf("%04s", $urt);
 
@@ -83,9 +83,14 @@ for ($i = 0; $i < $jkel; $i++) {
 }
 
 if ($ada > 0) {
-    echo "$query insert riwayat";
+    $ins = "INSERT INTO riwayat_perubahan (ID_RIWAYAT,NIK_PMHN,TGL_UBAH) VALUES ('$idr','$nik_pemohon',now())";
+    // echo $ins;
+    $r = mysqli_query($connect, $ins) or die("error:" . mysqli_error($connect));
+    if ($r) {
+        echo "<script>window.location='pdf_perubahan.php?idr=$idr';</script>";
+    }
 } else {
-    echo "Tampilkan $msg";
+    echo $msg;
 }
 
 
@@ -108,4 +113,4 @@ if ($ada > 0) {
 // $sql2="update biodata_wni set PDDK_AKH='$pendidikan' where NIK='$nikk'";
 // $results2=mysqli_query($connect,$sql2)or die("error:".mysqli_error($connect));
 
-//echo "<script>window.location='pdf_perubahan.php?nik=$nik_pemohon&no_kk=$no_kk';</script>";
+
