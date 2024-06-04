@@ -68,8 +68,9 @@ for ($i = 0; $i < $jkel; $i++) {
                 $awal = $orang['data'][$val]['awal'][$i];
                 $ahir = $orang['data'][$val]['ahir'][$i];
                 $dasar = $orang['data'][$val]['dasar'][$i];
-
+                
                 $query_d = $query_d . " " . $col . "_awal, " . $col . "_ahir, " . $col . "_dasar,";
+                $ahir = cekBeda($awal,$ahir)? $ahir : 0 ;
                 $query_b = $query_b . " '$awal', '$ahir', '$dasar',";
             }
             $query_ins = substr($query_d, 0, -1) . substr($query_b, 0, -1) . ")";
@@ -83,7 +84,7 @@ for ($i = 0; $i < $jkel; $i++) {
 }
 
 if ($ada > 0) {
-    $ins = "INSERT INTO riwayat_perubahan (ID_RIWAYAT,NIK_PMHN,TGL_UBAH) VALUES ('$idr','$nik_pemohon',now())";
+    $ins = "INSERT INTO riwayat_perubahan (ID_RIWAYAT,NO_KK, NIK_PMHN,TGL_UBAH) VALUES ('$idr','$no_kk','$nik_pemohon',now())";
     // echo $ins;
     $r = mysqli_query($connect, $ins) or die("error:" . mysqli_error($connect));
     if ($r) {

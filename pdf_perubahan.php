@@ -4,7 +4,8 @@ require "fpdf/fpdf.php";
 require "connect.php";
 
 if (isset($_GET['idr'])) {
-	$qcek = "SELECT * FROM riwayat_perubahan WHERE ID_RIWAYAT = '$_GET[idr]'";
+	$idr=$_GET['idr'];
+	$qcek = "SELECT * FROM riwayat_perubahan WHERE ID_RIWAYAT = '$idr'";
 	$tot = mysqli_num_rows(mysqli_query($connect, $qcek));
 	if ($tot > 0) {
 		// echo "ada";
@@ -60,10 +61,10 @@ if (isset($_GET['idr'])) {
 		$pdf->Cell(30,$t,'Keterangan',1,1,'C');
 
 		$u = 0;
-		$pr = mysqli_query($connect, "SELECT * FROM biodata_wni, data_keluarga, status_hubungan 
+		$qkk = mysqli_query($connect, "SELECT biodata_wni.NAMA_LGKP, biodata_wni.NIK, status_hubungan.status_hubungan FROM biodata_wni, data_keluarga, status_hubungan 
 								WHERE biodata_wni.NO_KK=data_keluarga.NO_KK  and biodata_wni.STAT_HBKEL=status_hubungan.STAT_HBKEL
 								AND biodata_wni.NO_KK='$row[NO_KK]' ORDER BY biodata_wni.STAT_HBKEL ASC");
-		while ($y = mysqli_fetch_array($pr)) {
+		while ($y = mysqli_fetch_array($qkk)) {
 			$u++;
 			$pdf->Cell(10,$t,$u,1,0,'C');
 			$pdf->Cell(80,$t,$y['NAMA_LGKP'],1,0,'L');
@@ -76,18 +77,117 @@ if (isset($_GET['idr'])) {
 		$pdf->Cell(0,$t,"Menyatakan bahwa elemen data kependudukan saya dan atau anggota keluarga saya telah berubah, dengan rincian:",0,1,'L');
 		$pdf->ln(2);
 
+		function yangDiubah($nik,$idr,$connect){
+			$q = mysqli_query($connect, "SELECT NIK FROM det_riwayat_perubahan WHERE NIK='$nik' AND ID_RIWAYAT='$idr'" );
+			$ada = mysqli_num_rows($q);
+			return $ada? 1 : 0;
+		}
+
+		function tulisKolom($bag, $connect, $pdf, $nkk, $idr){
+			$kolom = array(
+				array("PDDK_AHR","JENIS_PKRJN"),
+				array("AGAMA","GOL_DRH"),
+				array("STAT_KWN","STAT_HBKEL"),
+				array("NAMA_LGKP","JENIS_KLMIN"),
+				array("TMPT_LHR","TGL_LHR")
+			);
+
+			$qkk = mysqli_query($connect, "SELECT biodata_wni.NAMA_LGKP, biodata_wni.NIK, status_hubungan.status_hubungan FROM biodata_wni, data_keluarga, status_hubungan 
+								WHERE biodata_wni.NO_KK=data_keluarga.NO_KK  and biodata_wni.STAT_HBKEL=status_hubungan.STAT_HBKEL
+								AND biodata_wni.NO_KK='$nkk' ORDER BY biodata_wni.STAT_HBKEL ASC");
+
+			$no = 1;
+			while ($dtr=mysqli_fetch_array($qkk)){
+				if (yangDiubah($dtr['NIK'],$idr,$connect)){
+					
+					$qriwayat = mysqli_query($connect,"SELECT * FROM det_riwayat_perubahan WHERE ID_RIWAYAT='$idr' AND NIK='$dtr[NIK]'");
+					$r = mysqli_fetch_array($qriwayat); 
+					switch ($bag) {
+						case 1 :
+							$pdf->Cell(10,5,$no,1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
+							break;
+						case 2 :
+							$pdf->Cell(10,5,$no,1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
+						break;
+						case 3 :
+							
+							$pdf->Cell(10,5,$no,1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
+						break;
+						case 4 :
+							$pdf->Cell(10,5,$no,1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
+						break;
+						case 5 :
+							$pdf->Cell(10,5,$no,1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
+						break;
+							
+
+					}
+
+				} else {
+
+				}
+
+			}
+
+
+		}
+		
+
+
 		$pdf->Cell(0,6,"A. Pendidikan dan Pekerjaan",0,1,'L');
 
-		$pdf->Cell(10,$t,'No',1,0,'C');
-		$pdf->Cell(90,$t,'Pendidikan',1,0,'C');
+		$pdf->Cell(10,$t,'','LTR',0,'C');
+		$pdf->Cell(90,$t,'Pendidikan Akhir',1,0,'C');
 		$pdf->Cell(90,$t,'Pekerjaan',1,1,'C');
-		$pdf->Cell(10,$t,'No',1,0,'C');
+		$pdf->Cell(10,$t,'No','LBR',0,'C');
 		$pdf->Cell(30,$t,'Awal',1,0,'C');
 		$pdf->Cell(30,$t,'Ahir',1,0,'C');
 		$pdf->Cell(30,$t,'Dasar',1,0,'C');
-		$pdf->Cell(30,$t,'Awal',1,1,'C');
-		$pdf->Cell(30,$t,'Ahir',1,1,'C');
+		$pdf->Cell(30,$t,'Awal',1,0,'C');
+		$pdf->Cell(30,$t,'Ahir',1,0,'C');
 		$pdf->Cell(30,$t,'Dasar',1,1,'C');
+
+		tulisKolom(1,$connect,$pdf,$row['NO_KK'],$idr);
+		$pdf->ln(3);
+
+		$pdf->Cell(0,6,"B. Agama dan Lainnya",0,1,'L');
+
+		tulisKolom(2,$connect,$pdf,$row['NO_KK'],$idr);
+		tulisKolom(3,$connect,$pdf,$row['NO_KK'],$idr);
+		tulisKolom(4,$connect,$pdf,$row['NO_KK'],$idr);
+		tulisKolom(5,$connect,$pdf,$row['NO_KK'],$idr);
+
+		
 
 
 		$pdf->Output('I', 'surat.pdf');
