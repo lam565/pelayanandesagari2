@@ -16,11 +16,11 @@ if (isset($_GET['idr'])) {
 		$t = 5;
 		$tab = 10;
 
-		$pdf->SetFont("Times", "BU", 12);
+		$pdf->SetFont("Times", "BU", 11);
 		$pdf->Cell(190, 5, "SURAT PERNYATAAN PERUBAHAN ELEMEN DATA KEPENDUDUKAN", 0, 1, "C");
 		$pdf->ln(10);
 
-		$pdf->SetFont("Times", "", 11);
+		$pdf->SetFont("Times", "", 9);
 		$pdf->Cell(190, $t, "Yang bertanda tangan di bawah ini: ", 0, 1, "L");
 		$pdf->ln(3);
 
@@ -83,14 +83,21 @@ if (isset($_GET['idr'])) {
 			return $ada? 1 : 0;
 		}
 
+		function getKet($con,$tbl,$col,$kd,$ket){
+			$q=mysqli_query($con,"SELECT * FROM $tbl WHERE $col='$kd'");
+			$r=mysqli_fetch_array($q);
+			return $r[$ket];
+		}
+
 		function tulisKolom($bag, $connect, $pdf, $nkk, $idr){
-			$kolom = array(
-				array("PDDK_AHR","JENIS_PKRJN"),
-				array("AGAMA","GOL_DRH"),
-				array("STAT_KWN","STAT_HBKEL"),
-				array("NAMA_LGKP","JENIS_KLMIN"),
-				array("TMPT_LHR","TGL_LHR")
-			);
+			// $kolom = array(
+			// 	array("PDDK_AHR","JENIS_PKRJN"),
+			// 	array("AGAMA","GOL_DRH","STAT_KWN"),
+			// 	array("STAT_KWN","STAT_HBKEL"),
+			// 	array("NAMA_LGKP","JENIS_KLMIN"),
+			// 	array("TMPT_LHR","TGL_LHR")
+			// );
+			
 
 			$qkk = mysqli_query($connect, "SELECT biodata_wni.NAMA_LGKP, biodata_wni.NIK, status_hubungan.status_hubungan FROM biodata_wni, data_keluarga, status_hubungan 
 								WHERE biodata_wni.NO_KK=data_keluarga.NO_KK  and biodata_wni.STAT_HBKEL=status_hubungan.STAT_HBKEL
@@ -105,20 +112,23 @@ if (isset($_GET['idr'])) {
 					switch ($bag) {
 						case 1 :
 							$pdf->Cell(10,5,$no,1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
+							$pdf->Cell(30,5,getKet($connect,'pendidikan_terakhir','PDDK_AKH',$r['PDDK_AKH_awal'],'pendidikan'),1,0,'C');
+							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":getKet($connect,'pendidikan_terakhir','PDDK_AKH',$r['PDDK_AKH_ahir'],'pendidikan'),1,0,'C');
 							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
+							$pdf->Cell(30,5,getKet($connect,'pekerjaan','JENIS_PKRJN',$r['JENIS_PKRJN_awal'],'pekerjaan'),1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":getKet($connect,'pekerjaan','JENIS_PKRJN',$r['JENIS_PKRJN_ahir'],'pekerjaan'),1,0,'C');
 							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
 							break;
 						case 2 :
 							$pdf->Cell(10,5,$no,1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
+							$pdf->Cell(30,5,getKet($connect,'agama','AGAMA',$r['AGAMA_awal'],'nama_agama'),1,0,'C');
+							$pdf->Cell(30,5,$r['AGAMA_ahir']==0?"Tetap":getKet($$connect,'agama','AGAMA',$r['AGAMA_ahir'],'nama_agama'),1,0,'C');
+							$pdf->Cell(30,5,$r['AGAMA_dasar'],1,0,'C');
+							$pdf->Cell(30,5,getKet($connect,'golongan_darah','GOL_DRH',$r['GOL_DRH_awal'],'nama_golongan'),1,0,'C');
+							$pdf->Cell(30,5,$r['AGAMA_ahir']==0?"Tetap":getKet($connect,'golongan_darah','GOL_DRH',$r['GOL_DRH_awal'],'nama_golongan'),1,0,'C');
+							$pdf->Cell(30,5,$r['AGAMA_dasar'],1,0,'C');
+							$pdf->Cell(30,5,getKet($connect,'pekerjaan','JENIS_PKRJN',$r['JENIS_PKRJN_awal'],'pekerjaan'),1,0,'C');
+							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":getKet($connect,'pekerjaan','JENIS_PKRJN',$r['JENIS_PKRJN_ahir'],'pekerjaan'),1,0,'C');
 							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
 						break;
 						case 3 :
@@ -156,14 +166,13 @@ if (isset($_GET['idr'])) {
 				} else {
 
 				}
-
+				$no++;
 			}
 
 
 		}
 		
-
-
+		$pdf->SetFont("Times", "", 9);
 		$pdf->Cell(0,6,"A. Pendidikan dan Pekerjaan",0,1,'L');
 
 		$pdf->Cell(10,$t,'','LTR',0,'C');
@@ -177,10 +186,27 @@ if (isset($_GET['idr'])) {
 		$pdf->Cell(30,$t,'Ahir',1,0,'C');
 		$pdf->Cell(30,$t,'Dasar',1,1,'C');
 
+		$pdf->SetFont("Times", "", 7);
 		tulisKolom(1,$connect,$pdf,$row['NO_KK'],$idr);
-		$pdf->ln(3);
+		$pdf->ln(2);
 
+		$pdf->SetFont("Times", "", 9);
 		$pdf->Cell(0,6,"B. Agama dan Lainnya",0,1,'L');
+
+		$pdf->Cell(10,$t,'','LTR',0,'C');
+		$pdf->Cell(60,$t,'AGAMA',1,0,'C');
+		$pdf->Cell(60,$t,'GOL. DARAH',1,0,'C');
+		$pdf->Cell(60,$t,'STATUS',1,1,'C');
+		$pdf->Cell(10,$t,'No','LBR',0,'C');
+		$pdf->Cell(20,$t,'Awal',1,0,'C');
+		$pdf->Cell(20,$t,'Ahir',1,0,'C');
+		$pdf->Cell(20,$t,'Dasar',1,0,'C');
+		$pdf->Cell(20,$t,'Awal',1,0,'C');
+		$pdf->Cell(20,$t,'Ahir',1,0,'C');
+		$pdf->Cell(20,$t,'Dasar',1,0,'C');
+		$pdf->Cell(20,$t,'Awal',1,0,'C');
+		$pdf->Cell(20,$t,'Ahir',1,0,'C');
+		$pdf->Cell(20,$t,'Dasar',1,1,'C');
 
 		tulisKolom(2,$connect,$pdf,$row['NO_KK'],$idr);
 		tulisKolom(3,$connect,$pdf,$row['NO_KK'],$idr);
