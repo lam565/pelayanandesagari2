@@ -13,7 +13,7 @@ if (isset($_GET['idr'])) {
 		$pdf->SetMargins(10, 20);
 		$pdf->AddPage();
 
-		$t = 5;
+		$t = 4;
 		$tab = 10;
 
 		$pdf->SetFont("Times", "BU", 11);
@@ -93,8 +93,7 @@ if (isset($_GET['idr'])) {
 			// $kolom = array(
 			// 	array("PDDK_AHR","JENIS_PKRJN"),
 			// 	array("AGAMA","GOL_DRH","STAT_KWN"),
-			// 	array("STAT_KWN","STAT_HBKEL"),
-			// 	array("NAMA_LGKP","JENIS_KLMIN"),
+			// 	array("STAT_HBKEL","NAMA_LGKP","JENIS_KLMIN"),
 			// 	array("TMPT_LHR","TGL_LHR")
 			// );
 			
@@ -115,52 +114,49 @@ if (isset($_GET['idr'])) {
 							$pdf->Cell(30,5,getKet($connect,'pendidikan_terakhir','PDDK_AKH',$r['PDDK_AKH_awal'],'pendidikan'),1,0,'C');
 							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":getKet($connect,'pendidikan_terakhir','PDDK_AKH',$r['PDDK_AKH_ahir'],'pendidikan'),1,0,'C');
 							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
+							
 							$pdf->Cell(30,5,getKet($connect,'pekerjaan','JENIS_PKRJN',$r['JENIS_PKRJN_awal'],'pekerjaan'),1,0,'C');
 							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":getKet($connect,'pekerjaan','JENIS_PKRJN',$r['JENIS_PKRJN_ahir'],'pekerjaan'),1,0,'C');
 							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
 							break;
 						case 2 :
 							$pdf->Cell(10,5,$no,1,0,'C');
-							$pdf->Cell(30,5,getKet($connect,'agama','AGAMA',$r['AGAMA_awal'],'nama_agama'),1,0,'C');
-							$pdf->Cell(30,5,$r['AGAMA_ahir']==0?"Tetap":getKet($$connect,'agama','AGAMA',$r['AGAMA_ahir'],'nama_agama'),1,0,'C');
-							$pdf->Cell(30,5,$r['AGAMA_dasar'],1,0,'C');
-							$pdf->Cell(30,5,getKet($connect,'golongan_darah','GOL_DRH',$r['GOL_DRH_awal'],'nama_golongan'),1,0,'C');
-							$pdf->Cell(30,5,$r['AGAMA_ahir']==0?"Tetap":getKet($connect,'golongan_darah','GOL_DRH',$r['GOL_DRH_awal'],'nama_golongan'),1,0,'C');
-							$pdf->Cell(30,5,$r['AGAMA_dasar'],1,0,'C');
-							$pdf->Cell(30,5,getKet($connect,'pekerjaan','JENIS_PKRJN',$r['JENIS_PKRJN_awal'],'pekerjaan'),1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":getKet($connect,'pekerjaan','JENIS_PKRJN',$r['JENIS_PKRJN_ahir'],'pekerjaan'),1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
+							$pdf->Cell(20,5,getKet($connect,'agama','AGAMA',$r['AGAMA_awal'],'nama_agama'),1,0,'C');
+							$pdf->Cell(20,5,$r['AGAMA_ahir']==0?"Tetap":getKet($$connect,'agama','AGAMA',$r['AGAMA_ahir'],'nama_agama'),1,0,'C');
+							$pdf->Cell(20,5,$r['AGAMA_dasar'],1,0,'C');
+
+							$pdf->Cell(20,5,getKet($connect,'golongan_darah','GOL_DRH',$r['GOL_DRH_awal'],'nama_golongan'),1,0,'C');
+							$pdf->Cell(20,5,$r['GOL_DRH_ahir']==0?"Tetap":getKet($connect,'golongan_darah','GOL_DRH',$r['GOL_DRH_awal'],'nama_golongan'),1,0,'C');
+							$pdf->Cell(20,5,$r['GOL_DRH_dasar'],1,0,'C');
+
+							$pdf->Cell(20,5,getKet($connect,'status_perkawinan','STAT_KWN',$r['STAT_KWN_awal'],'status_perkawinan'),1,0,'C');
+							$pdf->Cell(20,5,$r['STAT_KWN_ahir']==0?"Tetap":getKet($connect,'status_perkawinan','STAT_KWN',$r['STAT_KWN_ahir'],'status_perkawinan'),1,0,'C');
+							$pdf->Cell(20,5,$r['STAT_KWN_dasar'],1,1,'C');
 						break;
-						case 3 :
-							
+						case 3 :							
 							$pdf->Cell(10,5,$no,1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
+							$pdf->Cell(30,5,getKet($connect,'status_hubungan','STAT_HBKEL',$r['STAT_HBKEL_awal'],'status_hubungan'),1,0,'C');
+							$pdf->Cell(30,5,$r['STAT_HBKEL_ahir']==0?"Tetap":getKet($$connect,'status_hubungan','STAT_HBKEL',$r['STAT_HBKEL_ahir'],'status_hubungan'),1,0,'C');
+							$pdf->Cell(30,5,$r['STAT_HBKEL_dasar'],1,0,'C');
+
+							$pdf->Cell(30,5,$r['NAMA_LGKP_awal'],1,0,'C');
+							$pdf->Cell(30,5,$r['NAMA_LGKP_ahir']==0?"Tetap":$r['NAMA_LGKP_ahir'],1,0,'C');
+							$pdf->Cell(30,5,$r['NAMA_LGKP_dasar'],1,1,'C');
 						break;
 						case 4 :
 							$pdf->Cell(10,5,$no,1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
-						break;
-						case 5 :
-							$pdf->Cell(10,5,$no,1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_ahir']==0?"Tetap":$r['PDDK_AKH_ahir'],1,0,'C');
-							$pdf->Cell(30,5,$r['PDDK_AKH_dasar'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_awal'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_ahir']==0?"Tetap":$r['JENIS_PKRJN_ahir'],1,0,'C');
-							$pdf->Cell(30,5,$r['JENIS_PKRJN_dasar'],1,1,'C');
-						break;
-							
+							$pdf->Cell(20,5,getKet($connect,'jenis_kelamin','JENIS_KLMIN',$r['JENIS_KLMIN_awal'],'jenis_kelamin'),1,0,'C');
+							$pdf->Cell(20,5,$r['JENIS_KLMIN_ahir']==0?"Tetap":getKet($$connect,'jenis_kelamin','JENIS_KLMIN',$r['JENIS_KLMIN_ahir'],'jenis_kelamin'),1,0,'C');
+							$pdf->Cell(20,5,$r['JENIS_KLMIN_dasar'],1,0,'C');
 
+							$pdf->Cell(20,5,$r['TMPT_LHR_awal'],1,0,'C');
+							$pdf->Cell(20,5,$r['TMPT_LHR_ahir']==0?"Tetap":$r['TMPT_LHR_ahir'],1,0,'C');
+							$pdf->Cell(20,5,$r['TMPT_LHR_dasar'],1,0,'C');
+
+							$pdf->Cell(20,5,substr($r['TGL_LHR_awal'],0,10),1,0,'C');
+							$pdf->Cell(20,5,$r['TGL_LHR_ahir']==0?"Tetap":substr($r['TGL_LHR_ahir'],0,10),1,0,'C');
+							$pdf->Cell(20,5,$r['TGL_LHR_dasar'],1,1,'C');
+						break;				
 					}
 
 				} else {
@@ -172,7 +168,7 @@ if (isset($_GET['idr'])) {
 
 		}
 		
-		$pdf->SetFont("Times", "", 9);
+		$pdf->SetFont("Times", "", 7);
 		$pdf->Cell(0,6,"A. Pendidikan dan Pekerjaan",0,1,'L');
 
 		$pdf->Cell(10,$t,'','LTR',0,'C');
@@ -186,11 +182,10 @@ if (isset($_GET['idr'])) {
 		$pdf->Cell(30,$t,'Ahir',1,0,'C');
 		$pdf->Cell(30,$t,'Dasar',1,1,'C');
 
-		$pdf->SetFont("Times", "", 7);
+
 		tulisKolom(1,$connect,$pdf,$row['NO_KK'],$idr);
 		$pdf->ln(2);
 
-		$pdf->SetFont("Times", "", 9);
 		$pdf->Cell(0,6,"B. Agama dan Lainnya",0,1,'L');
 
 		$pdf->Cell(10,$t,'','LTR',0,'C');
@@ -209,11 +204,46 @@ if (isset($_GET['idr'])) {
 		$pdf->Cell(20,$t,'Dasar',1,1,'C');
 
 		tulisKolom(2,$connect,$pdf,$row['NO_KK'],$idr);
-		tulisKolom(3,$connect,$pdf,$row['NO_KK'],$idr);
-		tulisKolom(4,$connect,$pdf,$row['NO_KK'],$idr);
-		tulisKolom(5,$connect,$pdf,$row['NO_KK'],$idr);
+		$pdf->ln(2);
 
-		
+		$pdf->Cell(10,$t,'','LTR',0,'C');
+		$pdf->Cell(90,$t,'HUBUNGAN KELUARGA',1,0,'C');
+		$pdf->Cell(90,$t,'NAMA LENGKAP',1,1,'C');
+		$pdf->Cell(10,$t,'No','LBR',0,'C');
+		$pdf->Cell(30,$t,'Awal',1,0,'C');
+		$pdf->Cell(30,$t,'Ahir',1,0,'C');
+		$pdf->Cell(30,$t,'Dasar',1,0,'C');
+		$pdf->Cell(30,$t,'Awal',1,0,'C');
+		$pdf->Cell(30,$t,'Ahir',1,0,'C');
+		$pdf->Cell(30,$t,'Dasar',1,1,'C');
+
+		tulisKolom(3,$connect,$pdf,$row['NO_KK'],$idr);
+		$pdf->ln(2);
+
+		$pdf->Cell(10,$t,'','LTR',0,'C');
+		$pdf->Cell(60,$t,'JENIS KELAMIN',1,0,'C');
+		$pdf->Cell(60,$t,'TEMPAT LAHIR',1,0,'C');
+		$pdf->Cell(60,$t,'TGL LAHIR',1,1,'C');
+		$pdf->Cell(10,$t,'No','LBR',0,'C');
+		$pdf->Cell(20,$t,'Awal',1,0,'C');
+		$pdf->Cell(20,$t,'Ahir',1,0,'C');
+		$pdf->Cell(20,$t,'Dasar',1,0,'C');
+		$pdf->Cell(20,$t,'Awal',1,0,'C');
+		$pdf->Cell(20,$t,'Ahir',1,0,'C');
+		$pdf->Cell(20,$t,'Dasar',1,0,'C');
+		$pdf->Cell(20,$t,'Awal',1,0,'C');
+		$pdf->Cell(20,$t,'Ahir',1,0,'C');
+		$pdf->Cell(20,$t,'Dasar',1,1,'C');
+
+		tulisKolom(4,$connect,$pdf,$row['NO_KK'],$idr);
+		$pdf->ln(5);
+
+		$pdf->SetFont("Times", "", 9);
+		$text = "Terlampir disampaikan fotokopi berkas-berkas yang terikat dengan perubahan elemen data tersebut.";
+		$pdf->MultiCell(0, $t, $text,0,'L');
+		$text="Demikian surat pernyataan ini saya buat dengan sebenarnya, apabila dalam keterangan yang saya berikan terdapat hal-hal yang tidak berdasarkan keadaan yang sebenarnya, saya bersedia dikenakan sanksi sesuai ketentuan perundang undangan yang berlaku.";
+		$pdf->MultiCell(0, $t, $text, 0,'L');
+		$pdf->ln(5);
 
 
 		$pdf->Output('I', 'surat.pdf');
@@ -410,14 +440,7 @@ if (isset($_GET['idr'])) {
 // );
 // $pdf->Cell(10, 0, "Pekerjaan", 1, 1, 'c');
 
-// $text = "Terlampir disampaikan fotokopi berkas-berkas yang terikat dengan perubahan elemen data tersebut.";
-// $pdf->Cell(2, 5, '', 0, 0, 'L');
-// $pdf->MultiCell(160, 5, $text);
-// $pdf->Cell(5, 5, '', 0, 0, 'C');
-// $pdf->Cell(5, 5, 'Demikian surat pernyataan ini saya buat dengan sebenarnya, apabila dalam keterangan yang saya berikan terdapat hal-hal yang tidak', 0, 0, 'L');
-// $pdf->ln(5);
-// $pdf->Cell(10, 5, 'berdasarkan keadaan yang sebenarnya, saya bersedia dikenakan sanksi sesuai ketentuan perundang undangan yang berlaku.', 0, 0, 'L');
-// $pdf->ln(20);
+
 
 // $pdf->Cell(
 // 	120,
